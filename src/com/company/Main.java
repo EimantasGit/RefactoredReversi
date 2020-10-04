@@ -10,6 +10,7 @@ public class Main {
         Apvertimas apvertimas = new Apvertimas(lenta);
         Ejimas ejimas = new Ejimas(lenta, zaidejas, apvertimas);
         ZaidimoPabaiga zaidimoPabaiga = new ZaidimoPabaiga(lenta);
+
         while(zaidimoPabaiga.baigesiZaidimas()==false){
             lenta.piestiLenta();
             int pirmaKoordinate = ivestis.pirmaKoordinate();

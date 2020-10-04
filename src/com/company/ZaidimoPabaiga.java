@@ -36,6 +36,7 @@ public class ZaidimoPabaiga {
         }
     return false;
     }
+
     public int skaiciuotiTusciusLaukus(){
         char[][] zaidimoLenta = lenta.gautiLenta();
         char tusciasLaukas = '-';
