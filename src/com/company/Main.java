@@ -10,12 +10,22 @@ public class Main {
         Apvertimas apvertimas = new Apvertimas(lenta);
         Ejimas ejimas = new Ejimas(lenta, zaidejas, apvertimas);
         ZaidimoPabaiga zaidimoPabaiga = new ZaidimoPabaiga(lenta);
+        Originator originator = new Originator();
+        CareTaker careTaker = new CareTaker();
 
         while(zaidimoPabaiga.baigesiZaidimas()==false){
+            originator.setState(lenta);
+            careTaker.add(originator.saveStateToMemento());
             lenta.piestiLenta();
             int pirmaKoordinate = ivestis.pirmaKoordinate();
-            int antraKoordinate = ivestis.antraKoordinate();
-            ejimas.tikrintiAplink(pirmaKoordinate, antraKoordinate);
+            if(pirmaKoordinate==0){
+                originator.getStateFromMemento(careTaker.get(0));
+                lenta = originator.getState();
+            }
+            else {
+                int antraKoordinate = ivestis.antraKoordinate();
+                ejimas.tikrintiAplink(pirmaKoordinate, antraKoordinate);
+            }
         }
     }
 }

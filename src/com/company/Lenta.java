@@ -41,7 +41,7 @@ public class Lenta {
         }
         System.out.println("Žaidėjo - " + zaidejas.gautiSpalva() + " eilė");
         System.out.println("Balto žaidėjo taškai: " + baltas.skaiciuotiBaltoTaskus(zaidimoLenta));
-        System.out.println("Balto žaidėjo taškai: " + juodas.skaiciuotiJuodoTaskus(zaidimoLenta));
+        System.out.println("Juodo žaidėjo taškai: " + juodas.skaiciuotiJuodoTaskus(zaidimoLenta));
     }
 
     public static Lenta grazintiObjekta(Zaidejas zaidejas) {

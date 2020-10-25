@@ -10,7 +10,13 @@ public class Ivestis {
         int pirma = 0;
         do {
             try {
-                pirma = Integer.parseInt(scanner.nextLine());
+                String input = scanner.nextLine();
+                if (input.equals("x")) {
+                    return 0;
+                }
+                else {
+                    pirma = Integer.parseInt(input);
+                }
             } catch (Exception e) {
                 System.out.println(klaida);
             }
@@ -18,7 +24,7 @@ public class Ivestis {
         return pirma;
     }
 
-    public int antraKoordinate() {
+    public int antraKoordinate()    {
         String ivestis = scanner.nextLine();
         int antra = 0;
         switch (ivestis) {

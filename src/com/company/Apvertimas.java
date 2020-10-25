@@ -8,18 +8,10 @@ public class Apvertimas {
     public Apvertimas(Lenta lenta){
         this.lenta = lenta;
     }
-    public void apverstiEilute(int pirmaKoordinate, int antraKoordinate, ArrayList<Integer> pazymetiDiskai, char zaidejoSimbolis){
+    public void apverstiDiskus(char zaidejas, int pirma, int antra, ArrayList<Integer> pazymetiDiskaiX, ArrayList<Integer> pazymetiDiskaiY, int x, int y){
         char[][] zaidimoLenta = lenta.gautiLenta();
-        for(Integer diskas: pazymetiDiskai){
-            zaidimoLenta[pirmaKoordinate][diskas] = zaidejoSimbolis;
+        for(int i=0; i<pazymetiDiskaiX.size(); i++){
+            zaidimoLenta[pazymetiDiskaiX.get(i)][pazymetiDiskaiY.get(i)] = zaidejas;
         }
-        lenta.keistiLenta(zaidimoLenta);
-    }
-    public void apverstiStulpeli(int pirmaKoordinate, int antraKoordinate, ArrayList<Integer> pazymetiDiskai, char zaidejoSimbolis){
-        char[][] zaidimoLenta = lenta.gautiLenta();
-        for(Integer diskas: pazymetiDiskai){
-            zaidimoLenta[diskas][antraKoordinate] = zaidejoSimbolis;
-        }
-        lenta.keistiLenta(zaidimoLenta);
     }
 }

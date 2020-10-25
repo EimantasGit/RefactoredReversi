@@ -7,7 +7,8 @@ public class Ejimas {
     private Zaidejas zaidejas;
     private Apvertimas apvertimas;
     private char tusciasLaukas = '-';
-    private ArrayList<Integer> pazymetiDiskai = new ArrayList<>();
+    private ArrayList<Integer> pazymetiDiskaiX = new ArrayList<>();
+    private ArrayList<Integer> pazymetiDiskaiY = new ArrayList<>();
 
     public Ejimas(Lenta lenta, Zaidejas zaidejas, Apvertimas apvertimas) {
         this.lenta = lenta;
@@ -21,93 +22,44 @@ public class Ejimas {
         if (zaidimoLenta[pirmaKoordinate][antraKoordinate] != tusciasLaukas) {
             return false;
         } else if (zaidimoLenta[pirmaKoordinate - 1][antraKoordinate] == zaidejas.gautiPriesininka()) {
-            ejimasGalimas = tikrintiVisasPuses(pirmaKoordinate, antraKoordinate);
+            ejimasGalimas = true;
         } else if (zaidimoLenta[pirmaKoordinate][antraKoordinate - 1] == zaidejas.gautiPriesininka()) {
-            ejimasGalimas = tikrintiVisasPuses(pirmaKoordinate, antraKoordinate);
+            ejimasGalimas = true;
         } else if (zaidimoLenta[pirmaKoordinate + 1][antraKoordinate] == zaidejas.gautiPriesininka()) {
-            ejimasGalimas = tikrintiVisasPuses(pirmaKoordinate, antraKoordinate);
+            ejimasGalimas = true;
         } else if (zaidimoLenta[pirmaKoordinate][antraKoordinate + 1] == zaidejas.gautiPriesininka()) {
-            ejimasGalimas = tikrintiVisasPuses(pirmaKoordinate, antraKoordinate);
-
+            ejimasGalimas = true;
         }
         if (ejimasGalimas == true) {
+            tikrintiVisasPuses(pirmaKoordinate, antraKoordinate, 0, 1);
+            tikrintiVisasPuses(pirmaKoordinate, antraKoordinate, 0, -1);
+            tikrintiVisasPuses(pirmaKoordinate, antraKoordinate, 1, 0);
+            tikrintiVisasPuses(pirmaKoordinate, antraKoordinate, -1, 0);
             zaidimoLenta[pirmaKoordinate][antraKoordinate] = zaidejas.gautiSpalva();
-            lenta.keistiLenta(zaidimoLenta);
             zaidejas.keistiSpalva();
+            lenta.keistiLenta(zaidimoLenta);
         }
         return ejimasGalimas;
     }
 
-    public boolean tikrintiVisasPuses(int pirmaKoordinate, int antraKoordinate) {
-        int tinkamiEjimai = 0;
-        if (this.tikrintiDesine(pirmaKoordinate, antraKoordinate) == true) {
-            tinkamiEjimai++;
-        }
-       if (this.tikrintiKaire(pirmaKoordinate, antraKoordinate) == true) {
-           tinkamiEjimai++;
-       }
-        if (this.tikrintiVirsu(pirmaKoordinate, antraKoordinate) == true) {
-            tinkamiEjimai++;
-        }
-        if (this.tikrintiApacia(pirmaKoordinate, antraKoordinate) == true) {
-            tinkamiEjimai++;
-        }
-        if (tinkamiEjimai > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean tikrintiDesine(int pirmaKoordinate, int antraKoordinate) {
-        pazymetiDiskai.clear();
-        char[][] zaidimoLenta = lenta.gautiLenta();
-        for (int i = antraKoordinate; i <= 8; i++) {
-            if (zaidimoLenta[pirmaKoordinate][i] == zaidejas.gautiPriesininka()) {
-                pazymetiDiskai.add(i);
-            } else if (zaidimoLenta[pirmaKoordinate][i] == zaidejas.gautiSpalva() && pazymetiDiskai.isEmpty() == false) {
-                apvertimas.apverstiEilute(pirmaKoordinate, antraKoordinate, pazymetiDiskai, zaidejas.gautiSpalva());
+   public boolean tikrintiVisasPuses(int pirmaKoordinate, int antraKoordinate, int x, int y){
+        int i = pirmaKoordinate;
+        int j = antraKoordinate;
+       char[][] zaidimoLenta = lenta.gautiLenta();
+       while((i >= 1) && (i <= 8) && (j >= 1) && (j<=8)){
+            if(zaidimoLenta[i][j] == zaidejas.gautiPriesininka()){
+                pazymetiDiskaiX.add(i);
+                pazymetiDiskaiY.add(j);
+            }
+            if(zaidimoLenta[i][j] == zaidejas.gautiSpalva()){
+                apvertimas.apverstiDiskus(zaidejas.gautiSpalva(), pirmaKoordinate, antraKoordinate, pazymetiDiskaiX, pazymetiDiskaiY, x, y);
+                pazymetiDiskaiX.clear();
+                pazymetiDiskaiY.clear();
                 return true;
             }
+            i += x;
+            j += y;
         }
-        return false;
-    }
-    public boolean tikrintiKaire(int pirmaKoordinate, int antraKoordinate) {
-        pazymetiDiskai.clear();
-        char[][] zaidimoLenta = lenta.gautiLenta();
-        for (int i = antraKoordinate; i >= 1; i--) {
-            if (zaidimoLenta[pirmaKoordinate][i] == zaidejas.gautiPriesininka()) {
-                pazymetiDiskai.add(i);
-            } else if (zaidimoLenta[pirmaKoordinate][i] == zaidejas.gautiSpalva() && pazymetiDiskai.isEmpty() == false) {
-                apvertimas.apverstiEilute(pirmaKoordinate, antraKoordinate, pazymetiDiskai, zaidejas.gautiSpalva());
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean tikrintiVirsu(int pirmaKoordinate, int antraKoordinate) {
-        pazymetiDiskai.clear();
-        char[][] zaidimoLenta = lenta.gautiLenta();
-        for (int i = pirmaKoordinate; i >= 1; i--) {
-            if (zaidimoLenta[i][antraKoordinate] == zaidejas.gautiPriesininka()) {
-                pazymetiDiskai.add(i);
-            } else if (zaidimoLenta[i][antraKoordinate] == zaidejas.gautiSpalva() && pazymetiDiskai.isEmpty() == false) {
-                apvertimas.apverstiStulpeli(pirmaKoordinate, antraKoordinate, pazymetiDiskai, zaidejas.gautiSpalva());
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean tikrintiApacia(int pirmaKoordinate, int antraKoordinate) {
-        pazymetiDiskai.clear();
-        char[][] zaidimoLenta = lenta.gautiLenta();
-        for (int i = pirmaKoordinate; i <= 8; i++) {
-            if (zaidimoLenta[i][antraKoordinate] == zaidejas.gautiPriesininka()) {
-                pazymetiDiskai.add(i);
-            } else if (zaidimoLenta[i][antraKoordinate] == zaidejas.gautiSpalva() && pazymetiDiskai.isEmpty() == false) {
-                apvertimas.apverstiStulpeli(pirmaKoordinate, antraKoordinate, pazymetiDiskai, zaidejas.gautiSpalva());
-                return true;
-            }
-        }
-        return false;
+       return false;
     }
 }

@@ -3,7 +3,7 @@ package com.company;
 public class Zaidejas {
     private char spalva = 'J';
     private char priesininkas = 'B';
-    protected int taskai = 2;
+    private int taskai = 2;
     public char gautiPriesininka() {
         return this.priesininkas;
     }

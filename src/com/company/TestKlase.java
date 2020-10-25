@@ -7,9 +7,20 @@ public class TestKlase {
     @Test
     public void antrosKoordinatesIvestis(){
         Ivestis ivestis = new Ivestis();
-
         Assert.assertEquals(1, ivestis.antraKoordinate("a"));
-        Assert.assertEquals(0, ivestis.antraKoordinate("Testas"));
-        Assert.assertEquals(2, ivestis.antraKoordinate("b"));
+
+    }
+    @Test
+    public void tusciuLaukuSkaiciavimas(){
+        Zaidejas zaidejas = new Zaidejas();
+        Lenta lenta = Lenta.grazintiObjekta(zaidejas);
+        ZaidimoPabaiga zaidimoPabaiga = new ZaidimoPabaiga(lenta);
+
+        Assert.assertEquals(60, zaidimoPabaiga.skaiciuotiTusciusLaukus());
+    }
+    @Test
+    public void priesininkoSimbolioGavimas(){
+        Zaidejas zaidejas = new Zaidejas();
+        Assert.assertEquals('B', zaidejas.gautiPriesininka());
     }
 }
